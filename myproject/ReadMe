@@ -1,0 +1,118 @@
+Creating a REST API in Django using a virtual environment is a great way to get started with Python and Django. Here’s a step-by-step guide to help you create a REST API with POST, PUT, DELETE, and GET methods using a SQLite database.
+
+1. Set Up the Virtual Environment
+   1.1 Create and Activate a Virtual Environment: In your project directory, open your terminal and run:
+        python -m venv venv
+
+   1.2 Activate the Virtual Environment:
+        .\venv\Scripts\activate
+
+   1.3 Install Django and Django REST Framework: With the virtual environment activated, install Django and Django REST framework:   
+        pip install django djangorestframework
+
+2. Start a New Django Project
+
+    2.1 Create a Django Project:
+        django-admin startproject myproject
+
+    2.2 Navigate to Your Project Folder:
+        cd myproject
+    2.3 Start a New Django App: Apps in Django are individual components of the project. For example, to create an app called api:
+        python manage.py startapp api
+
+3. Configure the Project
+
+    3.1 Add the App and REST Framework to Installed Apps: In myproject/settings.py, add 'rest_framework' and 'api' to the INSTALLED_APPS list:
+        INSTALLED_APPS = [
+                            ...
+                        'rest_framework',
+                        'api',
+                        ]
+
+4. Create a Model for Your API
+
+    4.1 Define a Model in the App: Open api/models.py and define a model, for example, Item, which might have fields like name, description, and price:
+
+    from django.db import models
+
+    class Item(models.Model):
+        name = models.CharField(max_length=100)
+        description = models.TextField()
+        price = models.DecimalField(max_digits=10, decimal_places=2)
+
+        def __str__(self):
+            return self.name
+
+    4.2 Create Database Migrations: Run the following commands to create and apply the migrations for your model:
+
+            python manage.py makemigrations
+            python manage.py migrate
+
+5. Create a Serializer
+
+    5.1 Define a Serializer: In api/serializers.py, create a serializer for the Item model:
+
+    from rest_framework import serializers
+    from .models import Item
+
+    class ItemSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = Item
+            fields = ['id', 'name', 'description', 'price']
+
+6. Create Views for CRUD Operations
+
+    6.1 Define API Views: In api/views.py, use Django REST framework’s view classes to handle GET, POST, PUT, and DELETE requests:
+
+    from rest_framework import generics
+    from .models import Item
+    from .serializers import ItemSerializer
+
+    class ItemListCreate(generics.ListCreateAPIView):
+        queryset = Item.objects.all()
+        serializer_class = ItemSerializer
+
+    class ItemDetail(generics.RetrieveUpdateDestroyAPIView):
+        queryset = Item.objects.all()
+        serializer_class = ItemSerializer
+
+    . ItemListCreate handles GET and POST requests.
+    . ItemDetail handles GET, PUT, and DELETE for individual items.
+
+7. Configure URL Routes
+
+    7.1 Define URL Routes for the API: In api/urls.py, define URL patterns for your views:
+
+        from django.urls import path
+        from .views import ItemListCreate, ItemDetail
+
+        urlpatterns = [
+            path('items/', ItemListCreate.as_view(), name='item-list-create'),
+            path('items/<int:pk>/', ItemDetail.as_view(), name='item-detail'),
+        ]
+
+    7.2 Include API URLs in Project URLs: In myproject/urls.py, include the URLs from your app:
+
+        from django.contrib import admin
+        from django.urls import path, include
+
+        urlpatterns = [
+            path('admin/', admin.site.urls),
+            path('api/', include('api.urls')),  # Add this line
+        ]
+
+8. Run the Server
+
+    8.1 Run the Django Development Server
+
+    python manage.py runserver
+
+9.  
+
+    . GET request to http://127.0.0.1:8000/api/items/ 
+    . POST request to http://127.0.0.1:8000/api/items/ 
+    . PUT request to http://127.0.0.1:8000/api/items/<id>/ 
+    . DELETE request to http://127.0.0.1:8000/api/items/<id>/
+
+
+
