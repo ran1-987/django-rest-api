@@ -1,4 +1,5 @@
-Creating a REST API in Django using a virtual environment is a great way to get started with Python and Django. Here’s a step-by-step guide to help you create a REST API with POST, PUT, DELETE, and GET methods using a SQLite database.
+REST API in Django using a virtual environment 
+REST API with POST, PUT, DELETE, and GET methods using a SQLite database.
 
 1. Set Up the Virtual Environment
    1.1 Create and Activate a Virtual Environment: In your project directory, open your terminal and run:
