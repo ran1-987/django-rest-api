@@ -8,21 +8,27 @@ Creating a REST API in Django using a virtual environment is a great way to get 
         .\venv\Scripts\activate
 
    1.3 Install Django and Django REST Framework: With the virtual environment activated, install Django and Django REST framework:   
+
         pip install django djangorestframework
 
 2. Start a New Django Project
 
     2.1 Create a Django Project:
+
         django-admin startproject myproject
 
     2.2 Navigate to Your Project Folder:
+
         cd myproject
+
     2.3 Start a New Django App: Apps in Django are individual components of the project. For example, to create an app called api:
+
         python manage.py startapp api
 
 3. Configure the Project
 
     3.1 Add the App and REST Framework to Installed Apps: In myproject/settings.py, add 'rest_framework' and 'api' to the INSTALLED_APPS list:
+    
         INSTALLED_APPS = [
                             ...
                         'rest_framework',
